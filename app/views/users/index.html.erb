@@ -1,0 +1,60 @@
+<div align="left">
+ <h2><%= link_to "Analytics" , :action "analytic" %></h2>
+</div> 
+<center>
+<fieldset>
+  <h3><b> Please Sign in</b><br>
+  <br>
+    <%= form_tag(:action=>'login') do %>
+
+      <b><%= label_tag(:name,    "Name:  ") %></b>
+      <%= text_field_tag(:name) %>
+    <br>
+    <br>
+      <%= submit_tag 'login'%>
+    <%end %></h3>
+ </fieldset>
+<br>
+<br>
+ <fieldset>
+<h3>Users currently logged in</h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>User Login Time</th>
+      <th>Role</th>
+    
+    </tr>
+  </thead> 
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <font color="green"><td><%= link_to "#{user.name}" , user_path(user.id)%></td></font>
+
+        <td><%= user.user_times.last.arrival_time.localtime %></td>
+        <td><% if user.role == true %>
+                <%= "Admin" %>
+            <% else %>  
+                 <%= "Employee" %>
+             <%end%>
+        </td>
+       
+      </tr>
+    <% end %>
+  </tbody> 
+</table>
+ </fieldset>
+
+  
+  <br>
+  <br>
+ <fieldset>
+  <h3>Not a user ! <br> Please register yourself
+    <br>
+    <br>
+  <%= link_to 'New User',new_user_path %></h3>
+  <!-- </font> -->
+ </fieldset>
+</center>

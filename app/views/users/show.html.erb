@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<% a=@user.user_times.last.arrival_time.localtime%>
+<% if a.strftime("%H:%M:%S :%z") > ("10:00:00 +0530") %>
+	<font color="red" , size="5px" ><%="You Are Late!!!"%></font>
+<% else %>
+	<font color="green" , size="5px"><%="You Arrived On Time!!"%></font>
+<%end%>
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Role:</strong> 
+  <% if @user.role == true %>
+   		<%= "Admin #{@user.role}" %>
+  <% else %>	
+  		<%= "Employee #{@user.role}" %>
+  <%end%>
+</p>
+
+<p>
+<strong> Arrival Time: </strong>
+<%= @user.user_times.last.arrival_time.localtime %>
+
+</p>
+<br>
+<br>
+<%= link_to 'Edit', edit_user_path(@user) %> 
+<%= link_to 'logout', users_path %>
