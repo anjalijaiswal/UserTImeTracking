@@ -13,7 +13,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    
+    @user=User.find(params[:id])
+    @usertimes=@user.user_times.map{|e| e.arrival_time.localtime}
+    a=@usertimes.map{|e| e.strftime("%H:%M")}
+      
+    average_time(a)
   end
 
   # GET /users/new
@@ -33,12 +37,68 @@ class UsersController < ApplicationController
       redirect_to users_url , :notice=>"Invalid User"
     end
   end
+ def average_time(*args)
+  begin
+     
+      a = *args
+      a=a.flatten
+       puts "#{a}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+      s=a.size
+      avg_min=0
+      a.each do |x|
+        hour,minute=x.split(',')
+        puts "#{hour}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>#{minute}"
+        total_min=(hour.to_i*60 + minute.to_i)
+        puts "total  minutes= #{total_min}"
+        
+        avg_min=avg_min+total_min
+      end  
+      avg_min=avg_min/s
+       #puts avg_min
+      @avg_time=avg_min.to_f/60
+      #puts "#{@avg_time}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      #avg_time = Time.parse(avg_time.to_s)
+      return @avg_time
+    rescue  ZeroDivisionError
+      redirect_to users_path, :notice => "no user logged in yet"
+    end
+ end
 
   def analytic
-  
+    
+      time_range=Time.now.midnight..Time.now.end_of_day
+      @usertimes=UserTime.where(:arrival_time=>time_range)
+      @u=@usertimes.map{|e| e.arrival_time.localtime}
+      a=@u.map{|e| e.strftime("%H:%M")}
+      average_time(a)
+    #   puts a
+    #   s=a.size
+    #   avg_min=0
+    #   a.map do |x|
+    #     hour,minute=x.split(':')
+    #     puts "#{hour}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>#{minute}"
+    #     total_min=(hour.to_i*60 + minute.to_i)
+    #     puts "total  minutes= #{total_min}"
+        
+    #     avg_min=avg_min+total_min
+    #   end  
+    #   avg_min=avg_min/s
+    #    #puts avg_min
+    #   @avg_time=avg_min.to_f/60
+    #   #puts "#{@avg_time}>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    #   #avg_time = Time.parse(avg_time.to_s)
+    #   return @avg_time
+    # rescue  ZeroDivisionError
+    #   redirect_to users_path, :notice => "no users arrived yet"
+    # end
+
   end
 
   def statistic
+   
+    @users=User.all
+    @user_times=UserTime.where(arrival_time: (DateTime.now.beginning_of_month..DateTime.now.end_of_month))
+    
   end
     
   

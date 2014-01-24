@@ -27,5 +27,32 @@
 </p>
 <br>
 <br>
+
+<fieldset>
+<h3><%="#{@user.name}'s arrival time:"%></h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>User Login Time</th>
+    </tr>
+  </thead> 
+
+  <tbody>
+   
+      <tr>
+          <% @user.user_times.map do |e| %>
+          <td><%=e.arrival_time.localtime%></td>
+          
+       </tr>
+     <%end%>
+  
+  </tbody> 
+</table>
+ </fieldset>
+ <br><br>
+ <%= "The average arrival time for #{@user.name} is #{@avg_time}"%>
+ <br>
+ <br>
 <%= link_to 'Edit', edit_user_path(@user) %> 
 <%= link_to 'logout', users_path %>
+

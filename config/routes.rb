@@ -1,7 +1,10 @@
 UserTimeTracking::Application.routes.draw do
-  resources :users
+  get '/users/analytic' , to: 'users#analytic' 
   post 'users/login'
-  get 'users/analytic'
+  resources :users
+  
+  
+  #get '/patients/:id', to: 'patients#show', as: 'patient'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
