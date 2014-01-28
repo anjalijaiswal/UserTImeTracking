@@ -1,0 +1,28 @@
+Admin
+
+<p id="notice"><%= notice %></p>
+<%= link_to "My Show Page" , user_path(@user.id) %><br><br>
+<%= link_to "Add New User" , new_user_path %><br><br>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>User Name</th>
+      <th>User Id</th>
+      <th>Delete Button</th>
+    </tr>
+  </thead> 
+
+  <tbody>
+   		 <% @users=User.all %>
+   		 <%@users.sort_by!{|e| e.name.downcase}%>
+   		 <% @users.each  do |user| %>
+      <tr>
+          <td><%= user.name %></td>
+          <td><%= user.id %></td>
+          <td><%= button_to "Delete" , {:action => "destroy" ,:id => user.id}, method: 'delete' %></td>
+       </tr>
+     <%end%>
+  
+  </tbody> 
+</table>

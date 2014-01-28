@@ -14,14 +14,14 @@
 <p>
   <strong>Role:</strong> 
   <% if @user.role == true %>
-   		<%= "Admin #{@user.role}" %>
+   		<%= "Admin " %>
   <% else %>	
-  		<%= "Employee #{@user.role}" %>
+  		<%= "Employee " %>
   <%end%>
 </p>
 
 <p>
-<strong> Arrival Time: </strong>
+<strong>Arrival Time : </strong>
 <%= @user.user_times.last.arrival_time.localtime %>
 
 </p>
@@ -50,9 +50,9 @@
 </table>
  </fieldset>
  <br><br>
- <%= "The average arrival time for #{@user.name} is #{@avg_time}"%>
+  <% a= @user.user_times.map{|e|e.arrival_time.localtime.strftime("%H:%M")}%>
+ <%= "The average arrival time for #{@user.name} is  #{@user.average_time(a)}"%>
  <br>
  <br>
 <%= link_to 'Edit', edit_user_path(@user) %> 
 <%= link_to 'logout', users_path %>
-

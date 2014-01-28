@@ -1,6 +1,7 @@
 <h1><p id="notice"><%= notice %></p></h1>
 <div align="left">
  <h2><%= link_to 'Analytics' , users_analytic_path %></h2>
+ <h2><%= link_to 'Satistics' , users_statistic_path %></h2>
 </div> 
 <center>
 <fieldset>
@@ -30,7 +31,10 @@
   </thead> 
 
   <tbody>
+     
+    <% @users.sort_by!{|e| e.name.downcase}%>
     <% @users.each do |user| %>
+   
       <tr>
         <font color="green"><td><%= link_to "#{user.name}" , user_path(user.id)%></td></font>
 
@@ -49,13 +53,6 @@
  </fieldset>
 
   
-  <br>
-  <br>
- <fieldset>
-  <h3>Not a user ! <br> Please register yourself
-    <br>
-    <br>
-  <%= link_to 'New User',new_user_path %></h3>
-  <!-- </font> -->
- </fieldset>
+ 
 </center>
+<%#= will_paginate @user %>

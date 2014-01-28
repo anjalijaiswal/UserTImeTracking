@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	include Avg
 	has_many :user_times , dependent: :destroy
 	validates :name , :uniqueness=> true , 
 					  :presence=> true ,

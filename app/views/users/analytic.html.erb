@@ -1,5 +1,5 @@
 
 <p id="notice"><%= notice %></p>
 <h2>
-<%=  "The Average Time of all Users for #{Date.today} is #{@avg_time}"%>
+<%=  "The Average Time of all Users for #{Date.today} is #{@users.first.average_time(@a)}"%>
 </h2>
